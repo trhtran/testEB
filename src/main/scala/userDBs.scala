@@ -104,7 +104,7 @@ import spark.implicits._
      val penaltyFactor = 0.95d
 
      def getPenalizedScore(timeStamp: Long, rating: Double) : Double = {
-        //Solution 1 : val timeGapInDays = (timestamp_max - timeStamp) / (1000.0 * 3600.0 * 24)
+        //Solution 1 : val timeGapInDays = (timestamp_max - timeStamp) / (1000.0 * 3600.0 * 24). toInt. toDouble
 
         //Solution 2 : count only upto day
         // (not take into account difference in time)
@@ -152,7 +152,7 @@ import spark.implicits._
      //save aggregate ratings to csv
      aggRatings
          .repartition(1) //FIXME
-	      .write
+         .write
          .format("com.databricks.spark.csv")
          .option("header", "true")
          .mode(SaveMode.Overwrite)
