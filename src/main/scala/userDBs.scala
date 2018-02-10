@@ -1,11 +1,9 @@
 package UserDatabase
 
 import java.time._
-//import org.joda.time.DateTime
-//import org.joda.time.Days
 
-//FIXME
-
+import java.time.temporal.ChronoUnit
+import java.util.Calendar
 
 import org.apache.log4j.Logger
 
@@ -106,7 +104,17 @@ import spark.implicits._
      val penaltyFactor = 0.95d
 
      def getPenalizedScore(timeStamp: Long, rating: Double) : Double = {
-        val timeGapInDays = (timestamp_max - timeStamp) / (1000.0 * 3600.0 * 24)
+        //Solution 1 : val timeGapInDays = (timestamp_max - timeStamp) / (1000.0 * 3600.0 * 24)
+
+        //Solution 2 : count only upto day
+        // (not take into account difference in time)
+        var calendar1 = Calendar.getInstance()
+        calendar1.setTimeInMillis(timeStamp)
+        var calendar2 = Calendar.getInstance()
+        calendar2.setTimeInMillis(timeStamp)
+
+        val timeGapInDays = calendar1.get(Calendar.DAY_OF_YEAR) - calendar2.get(Calendar.DAY_OF_YEAR)
+
         rating * scala.math.pow(penaltyFactor, timeGapInDays)
      }
 
