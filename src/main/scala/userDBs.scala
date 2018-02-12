@@ -109,7 +109,7 @@ import spark.implicits._
         //Solution 2 : count only upto day
         // (not take into account difference in time)
         var calendar1 = Calendar.getInstance()
-        calendar1.setTimeInMillis(timeStamp)
+        calendar1.setTimeInMillis(timestamp_max)
         var calendar2 = Calendar.getInstance()
         calendar2.setTimeInMillis(timeStamp)
 
